@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Учебный трекер</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <main>
+    <h1>Учебный трекер</h1>
+    <p class="subtitle">Задачи на неделю</p>
+    <section class="panel" aria-labelledby="summary">
+      <h2 id="summary">Итоги недели</h2>
+      <p id="stats" aria-live="polite"></p>
+      <progress id="progress" max="100" value="0" aria-label="Выполнение плана"></progress>
+    </section>
+    <form class="panel" novalidate>
+      <h2>Новая задача</h2>
+      <div class="fields">
+        <div>
+          <label for="title">Название задачи</label>
+          <input id="title" name="title" required aria-describedby="title-error">
+          <span class="error" id="title-error" aria-live="polite"></span>
+        </div>
+        <div>
+          <label for="hours">Часы</label>
+          <input id="hours" name="hours" inputmode="decimal" placeholder="Например, 1,5" required aria-describedby="hours-error">
+          <span class="error" id="hours-error" aria-live="polite"></span>
+        </div>
+        <button type="submit">Добавить</button>
+      </div>
+    </form>
+    <section class="panel" aria-labelledby="list-heading">
+      <div class="list-heading">
+        <h2 id="list-heading">Задачи</h2>
+        <div>
+          <label for="filter">Фильтр</label>
+          <select id="filter">
+            <option value="all">Все</option>
+            <option value="active">Активные</option>
+            <option value="done">Готовые</option>
+          </select>
+        </div>
+      </div>
+      <ul id="tasks"></ul>
+      <p id="empty" hidden>Здесь пока нет задач.</p>
+    </section>
+  </main>
+</body>
+</html>

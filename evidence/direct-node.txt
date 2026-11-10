@@ -1,0 +1,18 @@
+$ node --version
+v24.22.1
+$ node --check app.mjs
+$ node --check domain.mjs
+$ node --test tests/acceptance.test.mjs
+✔ T1 · исходные данные и прогресс по часам (0.583041ms)
+✔ T2 · переключение статуса меняет 25% на 75% и обратно (0.083666ms)
+✔ T3 · фильтры меняют только список (0.355625ms)
+✔ T4 · пустые поля, границы и шаг (0.145209ms)
+✔ T5 · удаление всех задач и повторное добавление (0.085542ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39.070709
