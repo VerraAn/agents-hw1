@@ -1,0 +1,5 @@
+schema: spec-driven
+
+context: |
+  Язык проекта и интерфейса: русский.
+  Мини-трекер работает в браузере на HTML, CSS и JavaScript.
