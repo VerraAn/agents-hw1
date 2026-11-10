@@ -14,7 +14,7 @@ export function validate(title, hours) {
   const number = Number(input.replace(',', '.'));
 
   if (title.trim().length === 0) errors.title = 'Напишите название задачи.';
-  if (!/^\d+(?:[.,]\d+)?$/.test(input) || number < 0.5 || number > 24 || !Number.isInteger(number * 2)) {
+  if (!/^(?:\d+(?:[.,]\d+)?|[.,]\d+)$/.test(input) || number < 0.5 || number > 24 || !Number.isInteger(number * 2)) {
     errors.hours = 'Укажите от 0,5 до 24 часов с шагом 0,5.';
   }
   return errors;

@@ -8,9 +8,10 @@ export function initialTasks() {
 
 export function validate(title, hours) {
   const errors = {};
-  const value = Number(hours.trim().replace(',', '.'));
+  const input = hours.trim();
+  const value = Number(input.replace(',', '.'));
   if (!title.trim()) errors.title = 'Введите название задачи.';
-  if (!hours.trim() || !Number.isFinite(value) || value < 0.5 || value > 24 || value % 0.5 !== 0) {
+  if (!/^(?:\d+(?:[.,]\d+)?|[.,]\d+)$/.test(input) || value < 0.5 || value > 24 || value % 0.5 !== 0) {
     errors.hours = 'Введите число от 0,5 до 24 с шагом 0,5.';
   }
   return errors;

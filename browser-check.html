@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><title>ДЗ 1 — проверка интерфейса</title>
+<style>body {font: 15px system-ui; margin: 16px; color: #18212c;} #results {display: grid; grid-template-columns: repeat(2, minmax(0, 390px)); gap: 0 12px; font-size: 13px;} #results div {grid-column: 1 / -1;} #results div:nth-child(8n + 1) {font-weight: 700; margin-top: 6px;} section {display: flex; flex-wrap: wrap; gap: 10px;} iframe {display: block; width: 390px; height: 710px; border: 1px solid #c5ccd4;} h2 {font-size: 1rem;}</style>
+<h1>Проверка двух реализаций</h1><div id="results"></div>
+<section><div><h2>direct</h2><iframe id="direct" title="direct"></iframe></div><div><h2>with-spec</h2><iframe id="with-spec" title="with-spec"></iframe></div></section>
+<script>const pages = {"direct":"\u003c!doctype html>\n\u003chtml lang=\"ru\">\n\u003chead>\n  \u003cmeta charset=\"utf-8\">\n  \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  \u003ctitle>Учебный трекер\u003c/title>\n  \u003cstyle>:root {\n  color-scheme: light;\n  font: 16px/1.5 system-ui, sans-serif;\n  color: #20283a;\n  background: #f1f4fb;\n}\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { max-width: 730px; margin: 32px auto; padding: 0 16px; }\nh1, h2, p { margin: 0; }\nh1 { font-size: clamp(1.8rem, 5vw, 2.5rem); }\nh2 { font-size: 1.15rem; }\n.subtitle { color: #4e5870; }\n.panel { margin-top: 18px; padding: 18px; background: #fff; border: 1px solid #d4ddec; border-radius: 14px; }\n#stats { margin-top: 8px; }\nprogress { width: 100%; height: 12px; accent-color: #344ea1; }\n.fields { display: grid; grid-template-columns: 2fr 1fr auto; gap: 12px; margin-top: 10px; align-items: start; }\n.fields button { margin-top: 24px; }\nlabel { font-weight: 600; }\ninput, select, button { font: inherit; }\ninput:not([type=checkbox]), select, button { min-height: 40px; padding: 6px 10px; border: 1px solid #8794af; border-radius: 7px; }\ninput:not([type=checkbox]) { display: block; width: 100%; }\ninput[aria-invalid=true] { border-color: #a12230; }\nbutton { cursor: pointer; background: #344ea1; color: #fff; border-color: #344ea1; }\n.error { display: block; color: #a12230; font-size: 0.875rem; }\n.list-heading, li { display: flex; align-items: center; justify-content: space-between; gap: 10px; }\nul { margin: 8px 0 0; padding: 0; list-style: none; }\nli { padding: 10px 0; border-top: 1px solid #e4e9f3; }\nli label { display: flex; align-items: baseline; min-width: 0; gap: 8px; }\nli label span { overflow-wrap: anywhere; }\nli button { background: #fff; color: #344ea1; }\n#empty { color: #4e5870; }\n@media (max-width: 560px) {\n  main { margin-top: 20px; }\n  .fields { grid-template-columns: minmax(0, 1fr); }\n  .fields button { margin-top: 0; }\n}\n\u003c/style>\n  \n\u003c/head>\n\u003cbody>\n  \u003cmain>\n    \u003ch1>Учебный трекер\u003c/h1>\n    \u003cp class=\"subtitle\">Задачи на неделю\u003c/p>\n    \u003csection class=\"panel\" aria-labelledby=\"summary\">\n      \u003ch2 id=\"summary\">Итоги недели\u003c/h2>\n      \u003cp id=\"stats\" aria-live=\"polite\">\u003c/p>\n      \u003cprogress id=\"progress\" max=\"100\" value=\"0\" aria-label=\"Выполнение плана\">\u003c/progress>\n    \u003c/section>\n    \u003cform class=\"panel\" novalidate>\n      \u003ch2>Новая задача\u003c/h2>\n      \u003cdiv class=\"fields\">\n        \u003cdiv>\n          \u003clabel for=\"title\">Название задачи\u003c/label>\n          \u003cinput id=\"title\" name=\"title\" required aria-describedby=\"title-error\">\n          \u003cspan class=\"error\" id=\"title-error\" aria-live=\"polite\">\u003c/span>\n        \u003c/div>\n        \u003cdiv>\n          \u003clabel for=\"hours\">Часы\u003c/label>\n          \u003cinput id=\"hours\" name=\"hours\" inputmode=\"decimal\" placeholder=\"Например, 1,5\" required aria-describedby=\"hours-error\">\n          \u003cspan class=\"error\" id=\"hours-error\" aria-live=\"polite\">\u003c/span>\n        \u003c/div>\n        \u003cbutton type=\"submit\">Добавить\u003c/button>\n      \u003c/div>\n    \u003c/form>\n    \u003csection class=\"panel\" aria-labelledby=\"list-heading\">\n      \u003cdiv class=\"list-heading\">\n        \u003ch2 id=\"list-heading\">Задачи\u003c/h2>\n        \u003cdiv>\n          \u003clabel for=\"filter\">Фильтр\u003c/label>\n          \u003cselect id=\"filter\">\n            \u003coption value=\"all\">Все\u003c/option>\n            \u003coption value=\"active\">Активные\u003c/option>\n            \u003coption value=\"done\">Готовые\u003c/option>\n          \u003c/select>\n        \u003c/div>\n      \u003c/div>\n      \u003cul id=\"tasks\">\u003c/ul>\n      \u003cp id=\"empty\" hidden>Здесь пока нет задач.\u003c/p>\n    \u003c/section>\n  \u003c/main>\n\u003cscript>function initialTasks() {\n  return [\n    { id: 1, title: 'Чтение', hours: 2, done: true },\n    { id: 2, title: 'Практика', hours: 4, done: false },\n    { id: 3, title: 'Повторение', hours: 2, done: false },\n  ];\n}\n\nfunction validate(title, hours) {\n  const errors = {};\n  const input = hours.trim();\n  const value = Number(input.replace(',', '.'));\n  if (!title.trim()) errors.title = 'Введите название задачи.';\n  if (!/^(?:\\d+(?:[.,]\\d+)?|[.,]\\d+)$/.test(input) || value \u003c 0.5 || value > 24 || value % 0.5 !== 0) {\n    errors.hours = 'Введите число от 0,5 до 24 с шагом 0,5.';\n  }\n  return errors;\n}\n\nfunction addTask(tasks, title, hours) {\n  const errors = validate(title, hours);\n  if (errors.title || errors.hours) return tasks;\n  const id = Math.max(0, ...tasks.map(task => task.id)) + 1;\n  return [...tasks, { id, title: title.trim(), hours: Number(hours.trim().replace(',', '.')), done: false }];\n}\n\nfunction removeTask(tasks, id) {\n  return tasks.filter(task => task.id !== id);\n}\n\nfunction toggleTask(tasks, id) {\n  return tasks.map(task => task.id === id ? { ...task, done: !task.done } : task);\n}\n\nfunction filterTasks(tasks, mode) {\n  if (mode === 'active') return tasks.filter(task => !task.done);\n  if (mode === 'done') return tasks.filter(task => task.done);\n  return tasks;\n}\n\nfunction summarize(tasks) {\n  let total = 0;\n  let done = 0;\n  for (const task of tasks) {\n    total += task.hours;\n    if (task.done) done += task.hours;\n  }\n  return { total, done, percent: total ? Math.round(100 * done / total) : 0 };\n}\n\n\nconst form = document.querySelector('form');\nconst title = document.querySelector('#title');\nconst hours = document.querySelector('#hours');\nconst filter = document.querySelector('#filter');\nconst list = document.querySelector('#tasks');\nconst formatHours = new Intl.NumberFormat('ru-RU');\nlet tasks = initialTasks();\n\nfunction render() {\n  const stats = summarize(tasks);\n  document.querySelector('#stats').textContent =\n    `Всего ${formatHours.format(stats.total)} ч · Готово ${formatHours.format(stats.done)} ч · ${stats.percent}%`;\n  document.querySelector('#progress').value = stats.percent;\n\n  const visible = filterTasks(tasks, filter.value);\n  list.replaceChildren();\n  document.querySelector('#empty').hidden = visible.length > 0;\n  for (const task of visible) {\n    const row = document.createElement('li');\n    const label = document.createElement('label');\n    const checkbox = document.createElement('input');\n    checkbox.type = 'checkbox';\n    checkbox.checked = task.done;\n    checkbox.addEventListener('change', () => {\n      tasks = toggleTask(tasks, task.id);\n      render();\n    });\n    const name = document.createElement('span');\n    name.textContent = `${task.title} · ${formatHours.format(task.hours)} ч`;\n    label.append(checkbox, name);\n    const remove = document.createElement('button');\n    remove.type = 'button';\n    remove.textContent = 'Удалить';\n    remove.setAttribute('aria-label', `Удалить: ${task.title}`);\n    remove.addEventListener('click', () => {\n      tasks = removeTask(tasks, task.id);\n      render();\n    });\n    row.append(label, remove);\n    list.append(row);\n  }\n}\n\nform.addEventListener('submit', event => {\n  event.preventDefault();\n  const errors = validate(title.value, hours.value);\n  for (const input of [title, hours]) {\n    const error = errors[input.id];\n    input.setAttribute('aria-invalid', String(Boolean(error)));\n    document.querySelector(`#${input.id}-error`).textContent = error ?? '';\n  }\n  if (errors.title || errors.hours) {\n    (errors.title ? title : hours).focus();\n    return;\n  }\n  tasks = addTask(tasks, title.value, hours.value);\n  form.reset();\n  title.focus();\n  render();\n});\n\nfilter.addEventListener('change', render);\nrender();\n\u003c/script>\u003c/body>\n\u003c/html>\n","with-spec":"\u003c!doctype html>\n\u003chtml lang=\"ru\">\n\u003chead>\n  \u003cmeta charset=\"utf-8\">\n  \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  \u003ctitle>Учебная неделя\u003c/title>\n  \u003cstyle>:root {\n  color-scheme: light;\n  color: #1c302b;\n  background: #eef3ef;\n  font: 16px/1.45 system-ui, sans-serif;\n}\n* { box-sizing: border-box; }\nbody { margin: 0; }\nmain { width: min(100%, 740px); margin-inline: auto; padding: 24px 16px 40px; }\nh1, h2, p { margin: 0; }\nh1 { font-size: clamp(1.9rem, 5vw, 2.7rem); }\nh2 { font-size: 1.2rem; }\n.eyebrow { color: #3c5d50; font-size: .76rem; letter-spacing: .13em; font-weight: 700; }\n.card { margin-top: 16px; padding: 16px; border: 1px solid #c8d9ce; border-radius: 12px; background: white; }\n.metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 12px 0; }\n.metrics div { background: #eaf2ed; padding: 8px; border-radius: 8px; }\n.metrics dt { font-size: .83rem; color: #3c5d50; }\n.metrics dd { margin: 0; font-size: 1.15rem; font-weight: 700; overflow-wrap: anywhere; }\nprogress { display: block; width: 100%; height: 10px; accent-color: #27634d; }\nform { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; gap: 12px; align-items: start; margin-top: 10px; }\nform label { display: block; font-weight: 600; }\ninput, button { font: inherit; }\nform input, button { min-height: 40px; border: 1px solid #769789; border-radius: 8px; padding: 6px 10px; }\nform input { width: 100%; }\nform input[aria-invalid=true] { border-color: #a12632; }\nbutton { color: #21513f; background: white; cursor: pointer; }\n.submit { background: #21513f; color: white; margin-top: 23px; }\n.error { color: #a12632; font-size: .85rem; margin-top: 3px; }\n.error:empty { display: none; }\nfieldset { display: flex; flex-wrap: wrap; gap: 5px 12px; margin: 8px 0; border: 0; padding: 0; }\nlegend { font-size: .86rem; padding: 0; }\ninput[type=radio], input[type=checkbox] { accent-color: #27634d; }\nul { margin: 10px 0 0; padding: 0; list-style: none; }\nli { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 9px; padding: 8px 0; border-top: 1px solid #dbe6de; }\n.task-label { display: flex; gap: 7px; align-items: baseline; }\n.task-label span { overflow-wrap: anywhere; }\nli small, #empty { color: #3c5d50; }\n@media (max-width: 520px) {\n  form { grid-template-columns: minmax(0, 1fr); }\n  .submit { margin-top: 0; }\n}\n\u003c/style>\n  \n\u003c/head>\n\u003cbody>\n  \u003cmain>\n    \u003cheader>\n      \u003cp class=\"eyebrow\">ЛИЧНЫЙ ПЛАН\u003c/p>\n      \u003ch1>Учебная неделя\u003c/h1>\n    \u003c/header>\n    \u003csection class=\"card\" aria-labelledby=\"metrics-heading\">\n      \u003ch2 id=\"metrics-heading\">Итоги недели\u003c/h2>\n      \u003cdl class=\"metrics\" aria-live=\"polite\">\n        \u003cdiv>\u003cdt>Всего\u003c/dt>\u003cdd id=\"total\">0 ч\u003c/dd>\u003c/div>\n        \u003cdiv>\u003cdt>Готово\u003c/dt>\u003cdd id=\"done\">0 ч\u003c/dd>\u003c/div>\n        \u003cdiv>\u003cdt>Прогресс\u003c/dt>\u003cdd id=\"percent\">0%\u003c/dd>\u003c/div>\n      \u003c/dl>\n      \u003cprogress id=\"progress\" max=\"100\" value=\"0\" aria-label=\"Прогресс по часам\">\u003c/progress>\n    \u003c/section>\n    \u003csection class=\"card\" aria-labelledby=\"add-heading\">\n      \u003ch2 id=\"add-heading\">Добавить задачу\u003c/h2>\n      \u003cform id=\"new-task\" novalidate>\n        \u003cdiv>\n          \u003clabel for=\"title\">Название задачи\u003c/label>\n          \u003cinput id=\"title\" name=\"title\" required aria-describedby=\"title-error\">\n          \u003cp id=\"title-error\" class=\"error\" aria-live=\"polite\">\u003c/p>\n        \u003c/div>\n        \u003cdiv>\n          \u003clabel for=\"hours\">Часы\u003c/label>\n          \u003cinput id=\"hours\" name=\"hours\" inputmode=\"decimal\" placeholder=\"0,5–24\" required aria-describedby=\"hours-error\">\n          \u003cp id=\"hours-error\" class=\"error\" aria-live=\"polite\">\u003c/p>\n        \u003c/div>\n        \u003cbutton class=\"submit\" type=\"submit\">Добавить\u003c/button>\n      \u003c/form>\n    \u003c/section>\n    \u003csection class=\"card\" aria-labelledby=\"tasks-heading\">\n      \u003ch2 id=\"tasks-heading\">Список задач\u003c/h2>\n      \u003cfieldset id=\"filters\">\n        \u003clegend>Показать задачи\u003c/legend>\n        \u003clabel>\u003cinput type=\"radio\" name=\"filter\" value=\"all\" checked> Все\u003c/label>\n        \u003clabel>\u003cinput type=\"radio\" name=\"filter\" value=\"active\"> Активные\u003c/label>\n        \u003clabel>\u003cinput type=\"radio\" name=\"filter\" value=\"done\"> Готовые\u003c/label>\n      \u003c/fieldset>\n      \u003cul id=\"tasks\">\u003c/ul>\n      \u003cp id=\"empty\" hidden>\u003c/p>\n    \u003c/section>\n  \u003c/main>\n  \u003ctemplate id=\"task-row\">\n    \u003cli>\n      \u003clabel class=\"task-label\">\u003cinput type=\"checkbox\">\u003cspan>\u003c/span>\u003c/label>\n      \u003csmall>\u003c/small>\n      \u003cbutton type=\"button\">Удалить\u003c/button>\n    \u003c/li>\n  \u003c/template>\n\u003cscript>const seed = [\n  { id: 'reading', title: 'Чтение', hours: 2, done: true },\n  { id: 'practice', title: 'Практика', hours: 4, done: false },\n  { id: 'review', title: 'Повторение', hours: 2, done: false },\n];\n\nfunction initialTasks() {\n  return seed.map(task => ({ ...task }));\n}\n\nfunction validate(title, hours) {\n  const errors = {};\n  const input = hours.trim();\n  const number = Number(input.replace(',', '.'));\n\n  if (title.trim().length === 0) errors.title = 'Напишите название задачи.';\n  if (!/^(?:\\d+(?:[.,]\\d+)?|[.,]\\d+)$/.test(input) || number \u003c 0.5 || number > 24 || !Number.isInteger(number * 2)) {\n    errors.hours = 'Укажите от 0,5 до 24 часов с шагом 0,5.';\n  }\n  return errors;\n}\n\nfunction addTask(tasks, title, hours) {\n  const errors = validate(title, hours);\n  if (errors.title || errors.hours) return tasks;\n  let next = tasks.length + 1;\n  const used = new Set(tasks.map(task => task.id));\n  while (used.has(`task-${next}`)) next += 1;\n  return tasks.concat({ id: `task-${next}`, title: title.trim(), hours: Number(hours.trim().replace(',', '.')), done: false });\n}\n\nfunction removeTask(tasks, id) {\n  return tasks.filter(task => task.id !== id);\n}\n\nfunction toggleTask(tasks, id) {\n  return tasks.map(task => {\n    if (task.id === id) return { ...task, done: !task.done };\n    return task;\n  });\n}\n\nfunction filterTasks(tasks, mode) {\n  if (mode === 'all') return tasks;\n  return tasks.filter(task => task.done === (mode === 'done'));\n}\n\nfunction summarize(tasks) {\n  const total = tasks.reduce((sum, task) => sum + task.hours, 0);\n  const done = tasks.reduce((sum, task) => sum + (task.done ? task.hours : 0), 0);\n  const percent = total === 0 ? 0 : Math.round(100 * done / total);\n  return { total, done, percent };\n}\n\n\nconst form = document.querySelector('#new-task');\nconst fields = [form.elements.title, form.elements.hours];\nconst filters = document.querySelector('#filters');\nconst list = document.querySelector('#tasks');\nconst template = document.querySelector('#task-row');\nconst empty = document.querySelector('#empty');\nconst hoursFormat = new Intl.NumberFormat('ru-RU');\n\nlet tasks = initialTasks();\nlet mode = 'all';\n\nfunction updateView() {\n  const { total, done, percent } = summarize(tasks);\n  document.querySelector('#total').textContent = `${hoursFormat.format(total)} ч`;\n  document.querySelector('#done').textContent = `${hoursFormat.format(done)} ч`;\n  document.querySelector('#percent').textContent = `${percent}%`;\n  document.querySelector('#progress').value = percent;\n\n  const visible = filterTasks(tasks, mode);\n  const rows = visible.map(task => {\n    const row = template.content.firstElementChild.cloneNode(true);\n    row.dataset.id = task.id;\n    row.querySelector('input').checked = task.done;\n    row.querySelector('span').textContent = task.title;\n    row.querySelector('small').textContent = `${hoursFormat.format(task.hours)} ч`;\n    row.querySelector('button').setAttribute('aria-label', `Удалить задачу «${task.title}»`);\n    return row;\n  });\n  list.replaceChildren(...rows);\n  empty.hidden = visible.length !== 0;\n  empty.textContent = tasks.length ? 'Под этим фильтром задач нет.' : 'Задач пока нет.';\n}\n\nform.addEventListener('submit', event => {\n  event.preventDefault();\n  const [title, hours] = fields.map(field => field.value);\n  const errors = validate(title, hours);\n  for (const field of fields) {\n    field.setAttribute('aria-invalid', String(field.name in errors));\n    document.getElementById(`${field.name}-error`).textContent = errors[field.name] ?? '';\n  }\n  const invalid = fields.find(field => field.name in errors);\n  if (invalid) {\n    invalid.focus();\n    return;\n  }\n  tasks = addTask(tasks, title, hours);\n  form.reset();\n  fields[0].focus();\n  updateView();\n});\n\nfilters.addEventListener('change', event => {\n  mode = event.target.value;\n  updateView();\n});\n\nlist.addEventListener('change', event => {\n  const row = event.target.closest('li');\n  tasks = toggleTask(tasks, row.dataset.id);\n  updateView();\n});\n\nlist.addEventListener('click', event => {\n  const button = event.target.closest('button');\n  if (!button) return;\n  tasks = removeTask(tasks, button.closest('li').dataset.id);\n  updateView();\n});\n\nupdateView();\n\u003c/script>\u003c/body>\n\u003c/html>\n"};
+
+const results = document.querySelector('#results');
+const say = line => {
+  const output = document.createElement('div');
+  output.textContent = line;
+  results.append(output);
+};
+const assert = (condition, message) => { if (!condition) throw new Error(message); };
+function pageIn(frame, version) {
+  return new Promise(resolve => {
+    frame.addEventListener('load', () => resolve(frame.contentDocument), { once: true });
+    frame.srcdoc = pages[version];
+  });
+}
+function inspect(doc, version) {
+  const query = selector => doc.querySelector(selector);
+  const rows = () => [...doc.querySelectorAll('#tasks li')];
+  const setFilter = mode => {
+    if (version === 'direct') {
+      query('#filter').value = mode;
+      query('#filter').dispatchEvent(new Event('change', { bubbles: true }));
+    } else {
+      query('input[name=filter][value=' + mode + ']').click();
+    }
+  };
+  const metrics = () => version === 'direct'
+    ? query('#stats').textContent.match(/[\d,]+/g).map(value => Number(value.replace(',', '.')))
+    : ['#total', '#done', '#percent'].map(selector => Number(query(selector).textContent.match(/[\d,]+/)[0].replace(',', '.')));
+  const expectMetrics = (total, done, percent) => {
+    const actual = metrics();
+    assert(actual.join() === [total, done, percent].join(), 'Метрики: ' + actual);
+    assert(query('progress').value === percent, 'Индикатор прогресса');
+  };
+  const findRow = title => rows().find(row => row.querySelector('label').textContent.includes(title));
+  assert(rows().length === 3 && findRow('Чтение').querySelector('input').checked, 'Исходные задачи');
+  expectMetrics(8, 2, 25);
+  say('T1 · 3 задачи, 2/8 ч, 25%');
+
+  findRow('Практика').querySelector('input').click();
+  expectMetrics(8, 6, 75);
+  assert(findRow('Практика').querySelector('input').checked, 'Флажок Практики');
+  say('T2 · Практика готова, 6/8 ч, 75%');
+  findRow('Практика').querySelector('input').click();
+
+  setFilter('active');
+  assert(rows().length === 2 && findRow('Практика') && findRow('Повторение'), 'Активные');
+  expectMetrics(8, 2, 25);
+  setFilter('done');
+  assert(rows().length === 1 && findRow('Чтение'), 'Готовые');
+  expectMetrics(8, 2, 25);
+  setFilter('all');
+  say('T3 · активные и готовые отфильтрованы, общие итоги сохранены');
+
+  const title = query('#title');
+  const hours = query('#hours');
+  const add = query('button[type=submit]');
+  for (const [name, value, field] of [
+    ['', '2', 'title'], ['   ', '2', 'title'], ['Тест', '', 'hours'],
+    ['Тест', '-1', 'hours'], ['Тест', '0,25', 'hours'],
+    ['Тест', '1,1', 'hours'], ['Тест', '24,5', 'hours'],
+  ]) {
+    title.value = name;
+    hours.value = value;
+    add.click();
+    assert(rows().length === 3, 'Некорректная задача добавлена');
+    const error = doc.getElementById(field + '-error');
+    assert(error.textContent.length > 0 && error.getBoundingClientRect().height > 0, 'Сообщение об ошибке');
+    assert(title.value === name && hours.value === value, 'Ввод потерян');
+  }
+  for (const [name, value, count] of [['Нижняя граница', '0,5', 4], ['Верхняя граница', '24', 5]]) {
+    title.value = name;
+    hours.value = value;
+    add.click();
+    assert(rows().length === count && findRow(name), 'Допустимое значение отклонено');
+  }
+  expectMetrics(32.5, 2, 6);
+  say('T4 · 7 неверных вводов отклонены с ошибкой; 0,5 и 24 приняты');
+
+  while (rows().length) {
+    const before = rows().length;
+    rows()[0].querySelector('button').click();
+    assert(rows().length === before - 1, 'Удаление');
+  }
+  expectMetrics(0, 0, 0);
+  assert(!query('#empty').hidden, 'Пустое состояние');
+  title.value = 'Задача после очистки';
+  hours.value = '1';
+  add.click();
+  assert(rows().length === 1, 'Повторное добавление');
+  say('T5 · 0 ч и 0%; пустой список; повторное добавление работает');
+
+  const width = doc.documentElement.clientWidth;
+  const scroll = doc.documentElement.scrollWidth;
+  assert(width === 390 && scroll === width, 'Ширина ' + width + ', прокрутка ' + scroll);
+  assert(title.labels.length === 1 && hours.labels.length === 1 && add.textContent.trim(), 'Подписи');
+  say('UI · ширина ' + width + ' px, scrollWidth ' + scroll + ' px, подписи есть');
+}
+(async () => {
+  for (const version of ['direct', 'with-spec']) {
+    say(version);
+    const frame = document.getElementById(version);
+    try {
+      inspect(await pageIn(frame, version), version);
+      say('ИТОГ: PASS');
+    } catch (error) {
+      say('ИТОГ: FAIL · ' + error.message);
+    }
+    await pageIn(frame, version);
+  }
+})();
+</script></html>
