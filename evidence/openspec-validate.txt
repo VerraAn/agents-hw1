@@ -1,0 +1,16 @@
+$ openspec status --change build-tracker
+- Loading change status...
+Change: build-tracker
+Schema: spec-driven
+Change root: <project>/with-spec/openspec/changes/build-tracker
+Progress: 4/4 artifacts complete
+
+[x] proposal
+[x] specs
+[x] design
+[x] tasks
+
+All planning artifacts complete!
+Next: openspec instructions apply --change "build-tracker" --json
+$ openspec validate build-tracker --strict --no-interactive
+Change 'build-tracker' is valid

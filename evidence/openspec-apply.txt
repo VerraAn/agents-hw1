@@ -1,0 +1,77 @@
+$ openspec instructions apply --change build-tracker --json
+{
+  "changeName": "build-tracker",
+  "changeDir": "<project>/with-spec/openspec/changes/build-tracker",
+  "schemaName": "spec-driven",
+  "contextFiles": {
+    "proposal": [
+      "<project>/with-spec/openspec/changes/build-tracker/proposal.md"
+    ],
+    "specs": [
+      "<project>/with-spec/openspec/changes/build-tracker/specs/tracker/spec.md"
+    ],
+    "design": [
+      "<project>/with-spec/openspec/changes/build-tracker/design.md"
+    ],
+    "tasks": [
+      "<project>/with-spec/openspec/changes/build-tracker/tasks.md"
+    ]
+  },
+  "progress": {
+    "total": 6,
+    "complete": 0,
+    "remaining": 6
+  },
+  "tasks": [
+    {
+      "id": "1",
+      "description": "1.1 Реализовать стартовый список и операции над задачами.",
+      "done": false,
+      "sourcePath": "<project>/with-spec/openspec/changes/build-tracker/tasks.md",
+      "line": 3
+    },
+    {
+      "id": "2",
+      "description": "1.2 Реализовать валидацию, фильтры и расчёт итогов.",
+      "done": false,
+      "sourcePath": "<project>/with-spec/openspec/changes/build-tracker/tasks.md",
+      "line": 4
+    },
+    {
+      "id": "3",
+      "description": "2.1 Собрать форму, список, фильтр и сводку часов.",
+      "done": false,
+      "sourcePath": "<project>/with-spec/openspec/changes/build-tracker/tasks.md",
+      "line": 8
+    },
+    {
+      "id": "4",
+      "description": "2.2 Подписать поля и действия, подготовить раскладку на 390 px.",
+      "done": false,
+      "sourcePath": "<project>/with-spec/openspec/changes/build-tracker/tasks.md",
+      "line": 9
+    },
+    {
+      "id": "5",
+      "description": "3.1 Запустить проверку синтаксиса и тесты T1–T5.",
+      "done": false,
+      "sourcePath": "<project>/with-spec/openspec/changes/build-tracker/tasks.md",
+      "line": 13
+    },
+    {
+      "id": "6",
+      "description": "3.2 Проверить форму, список и ширину 390 px в браузере.",
+      "done": false,
+      "sourcePath": "<project>/with-spec/openspec/changes/build-tracker/tasks.md",
+      "line": 14
+    }
+  ],
+  "taskTrackingConfigured": true,
+  "state": "ready",
+  "instruction": "Read context files, work through pending tasks, mark complete as you go.\nPause if you hit blockers or need clarification.",
+  "context": "Language: ru\nAll artifacts must be written in ru.\nKeep OpenSpec structural headings and SHALL/MUST keywords in English.\n",
+  "root": {
+    "path": "<project>/with-spec",
+    "source": "nearest"
+  }
+}

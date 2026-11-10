@@ -1,21 +1,22 @@
-const seed = [
-  { id: 'reading', title: 'Чтение', hours: 2, done: true },
-  { id: 'practice', title: 'Практика', hours: 4, done: false },
-  { id: 'review', title: 'Повторение', hours: 2, done: false },
-];
-
 export function initialTasks() {
-  return seed.map(task => ({ ...task }));
+  return [
+    { id: 1, title: 'Чтение', hours: 2, done: true },
+    { id: 2, title: 'Практика', hours: 4, done: false },
+    { id: 3, title: 'Повторение', hours: 2, done: false },
+  ];
 }
 
 export function validate(title, hours) {
   const errors = {};
   const input = hours.trim();
-  const number = Number(input.replace(',', '.'));
+  const amount = Number(input.replace(',', '.'));
 
-  if (title.trim().length === 0) errors.title = 'Напишите название задачи.';
-  if (!/^(?:\d+(?:[.,]\d+)?|[.,]\d+)$/.test(input) || number < 0.5 || number > 24 || !Number.isInteger(number * 2)) {
-    errors.hours = 'Укажите от 0,5 до 24 часов с шагом 0,5.';
+  if (title.trim() === '') {
+    errors.title = 'Введите название задачи.';
+  }
+  if (!/^(?:\d+(?:[.,]\d+)?|[.,]\d+)$/.test(input) ||
+      amount < 0.5 || amount > 24 || !Number.isInteger(amount * 2)) {
+    errors.hours = 'Введите от 0,5 до 24 часов с шагом 0,5.';
   }
   return errors;
 }
@@ -23,10 +24,9 @@ export function validate(title, hours) {
 export function addTask(tasks, title, hours) {
   const errors = validate(title, hours);
   if (errors.title || errors.hours) return tasks;
-  let next = tasks.length + 1;
-  const used = new Set(tasks.map(task => task.id));
-  while (used.has(`task-${next}`)) next += 1;
-  return tasks.concat({ id: `task-${next}`, title: title.trim(), hours: Number(hours.trim().replace(',', '.')), done: false });
+
+  const id = tasks.reduce((last, task) => Math.max(last, task.id), 0) + 1;
+  return [...tasks, { id, title: title.trim(), hours: Number(hours.trim().replace(',', '.')), done: false }];
 }
 
 export function removeTask(tasks, id) {
@@ -41,13 +41,17 @@ export function toggleTask(tasks, id) {
 }
 
 export function filterTasks(tasks, mode) {
-  if (mode === 'all') return tasks;
-  return tasks.filter(task => task.done === (mode === 'done'));
+  if (mode === 'active') return tasks.filter(task => !task.done);
+  if (mode === 'done') return tasks.filter(task => task.done);
+  return tasks;
 }
 
 export function summarize(tasks) {
-  const total = tasks.reduce((sum, task) => sum + task.hours, 0);
-  const done = tasks.reduce((sum, task) => sum + (task.done ? task.hours : 0), 0);
-  const percent = total === 0 ? 0 : Math.round(100 * done / total);
-  return { total, done, percent };
+  let total = 0;
+  let done = 0;
+  for (const task of tasks) {
+    total += task.hours;
+    if (task.done) done += task.hours;
+  }
+  return { total, done, percent: total === 0 ? 0 : Math.round(100 * done / total) };
 }

@@ -36,23 +36,16 @@ node experiment/browser-check.mjs
 
 ## Проверка спецификации в OpenSpec
 
-Порядок команд для среды, где доступны npm и Node.js. В текущем прогоне CLI установить не удалось. Причина и фактический вывод указаны в [отчёте](report.md).
+Изменение build-tracker создано и строго проверено до написания кода через OpenSpec 1.15.0. Результаты есть в [логах CLI](evidence/openspec-validate.txt). Чтобы проверить спецификацию повторно, из корня проекта выполните:
 
 ```sh
 cd with-spec
-npx --yes --package=@fission-ai/openspec@1.14.1 openspec --version
-npx --yes --package=@fission-ai/openspec@1.14.1 openspec validate build-tracker --strict --no-interactive
+openspec --version
+openspec validate build-tracker --strict --no-interactive
 ```
 
-Чтобы воспроизвести процесс B с запуска CLI до реализации, инициализируйте пустую рабочую папку командой `openspec init --tools codex --language ru` перед запросом на спецификацию. Для OpenCode используйте `--tools opencode`, как в пособии.
+Если CLI ещё не установлен, пособие предлагает npm-пакет `@fission-ai/openspec@1.14.1`. В этом прогоне использовался официальный standalone-релиз 1.15.0 для Apple Silicon.
 
-## Публикация на GitHub
+## История работы
 
-В ZIP рядом с папкой `agents-hw1/` лежит `agents-hw1-history.bundle` с локальной историей, включая первые реализации и исправление. Создайте пустой репозиторий `agents-hw1` на GitHub с доступом для преподавателя. Из распакованной папки выполните:
-
-```sh
-git clone -b main ./agents-hw1-history.bundle agents-hw1-github
-cd agents-hw1-github
-git remote set-url origin https://github.com/VerraAn/agents-hw1.git
-git push -u origin main
-```
+В истории Git сохранены общий бриф и тесты, первая реализация, проверенная спецификация и реализация по ней. Ссылки на этапы приведены в [отчёте](report.md).

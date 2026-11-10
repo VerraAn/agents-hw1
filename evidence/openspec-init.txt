@@ -1,0 +1,29 @@
+$ openspec --version
+1.15.0
+$ openspec init --tools codex --language ru
+- Creating OpenSpec structure...
+▌ OpenSpec structure created
+- Setting up Codex...
+✔ Setup complete for Codex
+
+OpenSpec Setup Complete
+
+Created: Codex
+6 skills in .agents/
+Commands skipped for: codex (uses skills)
+Config: openspec/config.yaml (schema: spec-driven)
+
+Getting started:
+  Start your first change: $openspec-propose "your idea" (Codex CLI or IDE); in the Codex desktop app, select openspec-propose from Skills in the sidebar
+
+Note: 6 more workflows are available (new, continue, ff, bulk-archive, verify, onboard).
+Add them with `openspec config profile`.
+
+Learn more: https://github.com/Fission-AI/OpenSpec
+Feedback:   https://github.com/Fission-AI/OpenSpec/issues
+
+$ openspec new change build-tracker
+- Creating change 'build-tracker' with schema 'spec-driven'...
+Created change 'build-tracker' at openspec/changes/build-tracker/
+Schema: spec-driven
+Next: openspec status --change build-tracker

@@ -1,73 +1,67 @@
 import { initialTasks, validate, addTask, removeTask, toggleTask, filterTasks, summarize } from './domain.mjs';
 
-const form = document.querySelector('#new-task');
-const fields = [form.elements.title, form.elements.hours];
-const filters = document.querySelector('#filters');
+const form = document.querySelector('form');
+const titleField = form.elements.title;
+const hoursField = form.elements.hours;
 const list = document.querySelector('#tasks');
-const template = document.querySelector('#task-row');
-const empty = document.querySelector('#empty');
-const hoursFormat = new Intl.NumberFormat('ru-RU');
+const rowTemplate = document.querySelector('#row');
+const filters = document.querySelector('#filters');
+const number = new Intl.NumberFormat('ru-RU');
 
 let tasks = initialTasks();
-let mode = 'all';
 
-function updateView() {
-  const { total, done, percent } = summarize(tasks);
-  document.querySelector('#total').textContent = `${hoursFormat.format(total)} ч`;
-  document.querySelector('#done').textContent = `${hoursFormat.format(done)} ч`;
-  document.querySelector('#percent').textContent = `${percent}%`;
-  document.querySelector('#progress').value = percent;
+function render() {
+  const totals = summarize(tasks);
+  document.querySelector('#total').textContent = `${number.format(totals.total)} ч`;
+  document.querySelector('#done').textContent = `${number.format(totals.done)} ч`;
+  document.querySelector('#percent').textContent = `${totals.percent}%`;
+  document.querySelector('#progress').value = totals.percent;
 
-  const visible = filterTasks(tasks, mode);
-  const rows = visible.map(task => {
-    const row = template.content.firstElementChild.cloneNode(true);
+  const visible = filterTasks(tasks, filters.querySelector(':checked').value);
+  list.replaceChildren();
+  for (const task of visible) {
+    const row = rowTemplate.content.firstElementChild.cloneNode(true);
     row.dataset.id = task.id;
     row.querySelector('input').checked = task.done;
-    row.querySelector('span').textContent = task.title;
-    row.querySelector('small').textContent = `${hoursFormat.format(task.hours)} ч`;
-    row.querySelector('button').setAttribute('aria-label', `Удалить задачу «${task.title}»`);
-    return row;
-  });
-  list.replaceChildren(...rows);
+    row.querySelector('label span').textContent = task.title;
+    row.querySelector('.task-hours').textContent = `${number.format(task.hours)} ч`;
+    row.querySelector('button').setAttribute('aria-label', `Удалить: ${task.title}`);
+    list.append(row);
+  }
+
+  const empty = document.querySelector('#empty');
   empty.hidden = visible.length !== 0;
-  empty.textContent = tasks.length ? 'Под этим фильтром задач нет.' : 'Задач пока нет.';
+  empty.textContent = tasks.length ? 'В этой группе задач нет.' : 'Задач пока нет.';
 }
 
 form.addEventListener('submit', event => {
   event.preventDefault();
-  const [title, hours] = fields.map(field => field.value);
-  const errors = validate(title, hours);
-  for (const field of fields) {
-    field.setAttribute('aria-invalid', String(field.name in errors));
-    document.getElementById(`${field.name}-error`).textContent = errors[field.name] ?? '';
+  const errors = validate(titleField.value, hoursField.value);
+  for (const field of [titleField, hoursField]) {
+    const message = errors[field.name] ?? '';
+    field.setAttribute('aria-invalid', String(Boolean(message)));
+    document.getElementById(`${field.id}-error`).textContent = message;
   }
-  const invalid = fields.find(field => field.name in errors);
-  if (invalid) {
-    invalid.focus();
+  if (errors.title || errors.hours) {
+    (errors.title ? titleField : hoursField).focus();
     return;
   }
-  tasks = addTask(tasks, title, hours);
+
+  tasks = addTask(tasks, titleField.value, hoursField.value);
   form.reset();
-  fields[0].focus();
-  updateView();
+  titleField.focus();
+  render();
 });
 
-filters.addEventListener('change', event => {
-  mode = event.target.value;
-  updateView();
-});
-
+filters.addEventListener('change', render);
 list.addEventListener('change', event => {
-  const row = event.target.closest('li');
-  tasks = toggleTask(tasks, row.dataset.id);
-  updateView();
+  tasks = toggleTask(tasks, Number(event.target.closest('li').dataset.id));
+  render();
 });
-
 list.addEventListener('click', event => {
   const button = event.target.closest('button');
   if (!button) return;
-  tasks = removeTask(tasks, button.closest('li').dataset.id);
-  updateView();
+  tasks = removeTask(tasks, Number(button.closest('li').dataset.id));
+  render();
 });
-
-updateView();
+render();

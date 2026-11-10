@@ -3,45 +3,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Учебная неделя</title>
+  <title>План на неделю</title>
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./app.mjs"></script>
 </head>
 <body>
   <main>
     <header>
-      <p class="eyebrow">ЛИЧНЫЙ ПЛАН</p>
-      <h1>Учебная неделя</h1>
+      <p class="eyebrow">УЧЕБНЫЕ ЗАДАЧИ</p>
+      <h1>План на неделю</h1>
     </header>
-    <section class="card" aria-labelledby="metrics-heading">
-      <h2 id="metrics-heading">Итоги недели</h2>
-      <dl class="metrics" aria-live="polite">
+    <section aria-labelledby="week">
+      <h2 id="week">Итоги</h2>
+      <dl class="totals" aria-live="polite">
         <div><dt>Всего</dt><dd id="total">0 ч</dd></div>
         <div><dt>Готово</dt><dd id="done">0 ч</dd></div>
         <div><dt>Прогресс</dt><dd id="percent">0%</dd></div>
       </dl>
-      <progress id="progress" max="100" value="0" aria-label="Прогресс по часам"></progress>
+      <progress id="progress" max="100" value="0" aria-label="Выполнение по часам"></progress>
     </section>
-    <section class="card" aria-labelledby="add-heading">
-      <h2 id="add-heading">Добавить задачу</h2>
-      <form id="new-task" novalidate>
+    <section aria-labelledby="new-heading">
+      <h2 id="new-heading">Новая задача</h2>
+      <form novalidate>
         <div>
           <label for="title">Название задачи</label>
           <input id="title" name="title" required aria-describedby="title-error">
-          <p id="title-error" class="error" aria-live="polite"></p>
+          <p class="error" id="title-error" aria-live="polite"></p>
         </div>
         <div>
           <label for="hours">Часы</label>
-          <input id="hours" name="hours" inputmode="decimal" placeholder="0,5–24" required aria-describedby="hours-error">
-          <p id="hours-error" class="error" aria-live="polite"></p>
+          <input id="hours" name="hours" inputmode="decimal" placeholder="Например, 1,5" required aria-describedby="hours-error">
+          <p class="error" id="hours-error" aria-live="polite"></p>
         </div>
         <button class="submit" type="submit">Добавить</button>
       </form>
     </section>
-    <section class="card" aria-labelledby="tasks-heading">
-      <h2 id="tasks-heading">Список задач</h2>
+    <section aria-labelledby="list-heading">
+      <h2 id="list-heading">Список задач</h2>
       <fieldset id="filters">
-        <legend>Показать задачи</legend>
+        <legend>Фильтр по статусу</legend>
         <label><input type="radio" name="filter" value="all" checked> Все</label>
         <label><input type="radio" name="filter" value="active"> Активные</label>
         <label><input type="radio" name="filter" value="done"> Готовые</label>
@@ -50,10 +50,10 @@
       <p id="empty" hidden></p>
     </section>
   </main>
-  <template id="task-row">
+  <template id="row">
     <li>
-      <label class="task-label"><input type="checkbox"><span></span></label>
-      <small></small>
+      <label><input type="checkbox"><span></span></label>
+      <span class="task-hours"></span>
       <button type="button">Удалить</button>
     </li>
   </template>
