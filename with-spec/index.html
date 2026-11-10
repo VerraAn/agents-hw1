@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>План на неделю</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">УЧЕБНЫЕ ЗАДАЧИ</p>
+      <h1>План на неделю</h1>
+    </header>
+    <section aria-labelledby="week">
+      <h2 id="week">Итоги</h2>
+      <dl class="totals" aria-live="polite">
+        <div><dt>Всего</dt><dd id="total">0 ч</dd></div>
+        <div><dt>Готово</dt><dd id="done">0 ч</dd></div>
+        <div><dt>Прогресс</dt><dd id="percent">0%</dd></div>
+      </dl>
+      <progress id="progress" max="100" value="0" aria-label="Выполнение по часам"></progress>
+    </section>
+    <section aria-labelledby="new-heading">
+      <h2 id="new-heading">Новая задача</h2>
+      <form novalidate>
+        <div>
+          <label for="title">Название задачи</label>
+          <input id="title" name="title" required aria-describedby="title-error">
+          <p class="error" id="title-error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="hours">Часы</label>
+          <input id="hours" name="hours" inputmode="decimal" placeholder="Например, 1,5" required aria-describedby="hours-error">
+          <p class="error" id="hours-error" aria-live="polite"></p>
+        </div>
+        <button class="submit" type="submit">Добавить</button>
+      </form>
+    </section>
+    <section aria-labelledby="list-heading">
+      <h2 id="list-heading">Список задач</h2>
+      <fieldset id="filters">
+        <legend>Фильтр по статусу</legend>
+        <label><input type="radio" name="filter" value="all" checked> Все</label>
+        <label><input type="radio" name="filter" value="active"> Активные</label>
+        <label><input type="radio" name="filter" value="done"> Готовые</label>
+      </fieldset>
+      <ul id="tasks"></ul>
+      <p id="empty" hidden></p>
+    </section>
+  </main>
+  <template id="row">
+    <li>
+      <label><input type="checkbox"><span></span></label>
+      <span class="task-hours"></span>
+      <button type="button">Удалить</button>
+    </li>
+  </template>
+</body>
+</html>
