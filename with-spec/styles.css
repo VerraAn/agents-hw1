@@ -1,0 +1,41 @@
+:root {
+  color-scheme: light;
+  color: #1c302b;
+  background: #eef3ef;
+  font: 16px/1.45 system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: min(100%, 740px); margin-inline: auto; padding: 24px 16px 40px; }
+h1, h2, p { margin: 0; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); }
+h2 { font-size: 1.2rem; }
+.eyebrow { color: #3c5d50; font-size: .76rem; letter-spacing: .13em; font-weight: 700; }
+.card { margin-top: 16px; padding: 16px; border: 1px solid #c8d9ce; border-radius: 12px; background: white; }
+.metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 12px 0; }
+.metrics div { background: #eaf2ed; padding: 8px; border-radius: 8px; }
+.metrics dt { font-size: .83rem; color: #3c5d50; }
+.metrics dd { margin: 0; font-size: 1.15rem; font-weight: 700; overflow-wrap: anywhere; }
+progress { display: block; width: 100%; height: 10px; accent-color: #27634d; }
+form { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; gap: 12px; align-items: start; margin-top: 10px; }
+form label { display: block; font-weight: 600; }
+input, button { font: inherit; }
+form input, button { min-height: 40px; border: 1px solid #769789; border-radius: 8px; padding: 6px 10px; }
+form input { width: 100%; }
+form input[aria-invalid=true] { border-color: #a12632; }
+button { color: #21513f; background: white; cursor: pointer; }
+.submit { background: #21513f; color: white; margin-top: 23px; }
+.error { color: #a12632; font-size: .85rem; margin-top: 3px; }
+.error:empty { display: none; }
+fieldset { display: flex; flex-wrap: wrap; gap: 5px 12px; margin: 8px 0; border: 0; padding: 0; }
+legend { font-size: .86rem; padding: 0; }
+input[type=radio], input[type=checkbox] { accent-color: #27634d; }
+ul { margin: 10px 0 0; padding: 0; list-style: none; }
+li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 9px; padding: 8px 0; border-top: 1px solid #dbe6de; }
+.task-label { display: flex; gap: 7px; align-items: baseline; }
+.task-label span { overflow-wrap: anywhere; }
+li small, #empty { color: #3c5d50; }
+@media (max-width: 520px) {
+  form { grid-template-columns: minmax(0, 1fr); }
+  .submit { margin-top: 0; }
+}

@@ -1,0 +1,6 @@
+$ openspec --version
+zsh:155: command not found: openspec
+$ openspec validate build-tracker --strict --no-interactive
+zsh:156: command not found: openspec
+$ curl -I https://registry.npmjs.org/@fission-ai%2fopenspec
+curl: (6) Could not resolve host: registry.npmjs.org
